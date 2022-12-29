@@ -8,5 +8,6 @@ public class QuarterDto {
     private String name;
     private String address;
     private String phone;
+    private String status;
     private RoleDto role;
 }

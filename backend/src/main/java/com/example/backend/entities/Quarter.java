@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "quater")
+@Table(name = "quarter")
 @Data
 public class Quarter {
     @Id
@@ -18,6 +18,7 @@ public class Quarter {
     private String name;
     private String address;
     private String phone;
+    private String status;
 
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "role_id")

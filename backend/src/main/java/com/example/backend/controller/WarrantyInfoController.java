@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000/")
 @RestController
 @RequestMapping("/api/v1/warrantyinfo/")
 public class WarrantyInfoController {
@@ -50,7 +51,7 @@ public class WarrantyInfoController {
                                                               @PathVariable String productID,
                                                               @PathVariable Long shopID,
                                                               @PathVariable Long warrantyCenterID) {
-        WarrantyInfoDto newWarrantyInfo = service.createWarrantyInfo(warrantyInfoDto, productID, shopID, warrantyCenterID);
+        WarrantyInfoDto newWarrantyInfo = service.createWarrantyInfo(warrantyInfoDto, productID, warrantyCenterID, shopID);
         return new ResponseEntity<>(newWarrantyInfo, HttpStatus.CREATED);
     }
 
@@ -65,6 +66,29 @@ public class WarrantyInfoController {
     public ResponseEntity<String> deleteWarrantyInfo(@PathVariable Long warrantyInfoID) {
         service.deleteWarrantyInfo(warrantyInfoID);
         return new ResponseEntity<>("Delete!!!", HttpStatus.OK);
+    }
+
+    @GetMapping("/statistics/{warrantyCenterID}/year/{year}/bymonth/{month}/")
+    public ResponseEntity<List<WarrantyInfoDto>> getWarrantyInfoByMonthOfWarrantyCenter(@PathVariable Long warrantyCenterID,
+                                                                                        @PathVariable Long year,
+                                                                                        @PathVariable Long month) {
+        List<WarrantyInfoDto> list = service.getWarrantyInfoByMonthOfWarrantyCenter(warrantyCenterID, year, month);
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
+    @GetMapping("/statistics/{warrantyCenterID}/year/{year}/byquarterperiod/{quarterPeriod}/")
+    public ResponseEntity<List<WarrantyInfoDto>> getWarrantyInfoByQuarterPeriodOfWarrantyCenter(@PathVariable Long warrantyCenterID,
+                                                                                        @PathVariable Long year,
+                                                                                        @PathVariable Long quarterPeriod) {
+        List<WarrantyInfoDto> list = service.getWarrantyInfoByQuarterPeriodOfWarrantyCenter(warrantyCenterID, year, quarterPeriod);
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
+    @GetMapping("/statistics/{warrantyCenterID}/byyear/{year}/")
+    public ResponseEntity<List<WarrantyInfoDto>> getWarrantyInfoByYearOfWarrantyCenter(@PathVariable Long warrantyCenterID,
+                                                                                                @PathVariable Long year) {
+        List<WarrantyInfoDto> list = service.getWarrantyInfoByYearOfWarrantyCenter(warrantyCenterID, year);
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
 }

@@ -87,7 +87,7 @@ public class QuarterServiceImpl implements QuarterService {
                 () -> new ResourceNotFoundException("Quarter", "QuarterID", quarterID)
         );
         Quarter updateQuarter = mapper.map(quarterDto, Quarter.class);
-        updateQuarter.setId(quarterID);
+
         quarterRepo.save(updateQuarter);
         return quarterDto;
     }

@@ -13,4 +13,6 @@ public interface CallbackInfoRepo extends JpaRepository<CallbackInfo, Long> {
     List<CallbackInfo> findByProduct(Product product);
     List<CallbackInfo> findByShop(Quarter shop);
     List<CallbackInfo> findByFactory(Quarter factory);
+
+
 }

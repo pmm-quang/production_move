@@ -1,9 +1,10 @@
 package com.example.backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -16,10 +17,11 @@ public class Product {
     private String engineNumber;
     private String color;
     private String status;
-    private Date manufactureDate;
-    private Integer warrantyTime;
 
-    @ManyToOne(cascade = {CascadeType.ALL})
+    private Date manufactureDate;
+
+
+    @ManyToOne(cascade = {CascadeType.ALL}, optional = false)
     @JoinColumn(name = "productline_id")
     private ProductLine productLine;
 
@@ -27,13 +29,13 @@ public class Product {
     @JoinColumn(name = "factory_id")
     private Quarter factory;
 
-    @ManyToOne(cascade = {CascadeType.ALL}, optional = false)
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "shop_id")
     private Quarter shop;
 
-    @OneToMany(mappedBy = "product", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "product", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<WarrantyInfo> warrantyInfos;
 
-    @OneToMany(mappedBy = "product", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "product", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<CallbackInfo> callbackInfos;
 }

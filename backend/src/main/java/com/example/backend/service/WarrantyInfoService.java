@@ -13,4 +13,11 @@ public interface WarrantyInfoService {
     WarrantyInfoDto createWarrantyInfo(WarrantyInfoDto wDto, String productID, Long warrantyCenterID, Long shopID);
     WarrantyInfoDto updateWarrantyInfo(WarrantyInfoDto wDto, Long warrantyInfoID);
     void deleteWarrantyInfo(Long warrantyInfoID);
+
+    List<WarrantyInfoDto> getWarrantyInfoByMonthOfWarrantyCenter(Long warrantyCenterID, Long year, Long month);
+
+    List<WarrantyInfoDto> getWarrantyInfoByQuarterPeriodOfWarrantyCenter(Long warrantyCenterID, Long year, Long quarterPeriod);
+
+    List<WarrantyInfoDto> getWarrantyInfoByYearOfWarrantyCenter(Long warrantyCenterID, Long year);
+
 }

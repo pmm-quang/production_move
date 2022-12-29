@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin(origins = "http://localhost:3000/")
 @RestController
 @RequestMapping("/api/v1/quarter/")
 public class QuarterController {
@@ -52,9 +52,9 @@ public class QuarterController {
         return new ResponseEntity<>(quarter, HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/{roleID}")
-    public ResponseEntity<String> deleteQuarter(@PathVariable Long roleID) {
-        quarterService.deleteQuarter(roleID);
+    @DeleteMapping("/delete/{quarterID}")
+    public ResponseEntity<String> deleteQuarter(@PathVariable Long quarterID) {
+        quarterService.deleteQuarter(quarterID);
         return new ResponseEntity<>("delete!!!", HttpStatus.OK);
     }
 

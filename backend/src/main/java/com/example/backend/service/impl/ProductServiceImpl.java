@@ -2,10 +2,14 @@ package com.example.backend.service.impl;
 
 import com.example.backend.entities.Product;
 import com.example.backend.entities.ProductLine;
+import com.example.backend.entities.Quarter;
+import com.example.backend.entities.custom.ErrorPerLine;
 import com.example.backend.exception.ResourceNotFoundException;
 import com.example.backend.payload.ProductDto;
+import com.example.backend.payload.QuarterDto;
 import com.example.backend.repository.ProductLineRepo;
 import com.example.backend.repository.ProductRepo;
+import com.example.backend.repository.QuarterRepo;
 import com.example.backend.service.ProductService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +28,8 @@ public class ProductServiceImpl implements ProductService {
     ModelMapper mapper;
     @Autowired
     private ProductLineRepo productLineRepo;
+    @Autowired
+    private QuarterRepo quarterRepo;
 
     @Override
     public List<ProductDto> getAllProduct() {
@@ -100,5 +106,30 @@ public class ProductServiceImpl implements ProductService {
                 () -> new ResourceNotFoundException("Product", "ProductID", 123456)
         );
         productRepo.delete(product);
+    }
+
+    @Override
+    public List<ProductDto> getProductsByShopAndStatus(Long shopID, String status) {
+        Quarter shop = quarterRepo.findById(shopID).orElseThrow(
+                () -> new ResourceNotFoundException("Shop", "ShopID", shopID)
+        );
+
+        List<Product> products = productRepo.findByShopAndStatus(shop, status);
+        List<ProductDto> productDtos = products.stream().map(
+                product -> mapper.map(product, ProductDto.class)
+        ).collect(Collectors.toList());
+        return productDtos;
+    }
+
+    @Override
+    public List<ErrorPerLine> getErrorPerLineOfFactory(Long factoryID) {
+        List<ErrorPerLine> list = productRepo.findErrorPerLineOfFactory(factoryID);
+        return list;
+    }
+
+    @Override
+    public List<ErrorPerLine> getErrorPerShopOfFactory(Long factoryID) {
+        List<ErrorPerLine> list = productRepo.findErrorPerShopOfFactory(factoryID);
+        return list;
     }
 }

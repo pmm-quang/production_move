@@ -3,6 +3,8 @@ package com.example.backend.service.impl;
 import com.example.backend.entities.Customer;
 import com.example.backend.entities.Order;
 import com.example.backend.entities.Product;
+import com.example.backend.entities.custom.OrderByYear;
+import com.example.backend.entities.custom.OrderPerMonth;
 import com.example.backend.exception.ResourceNotFoundException;
 import com.example.backend.payload.OrderDto;
 import com.example.backend.repository.CustomerRepo;
@@ -66,8 +68,10 @@ public class OrderServiceImpl implements OrderService {
                 ()-> new ResourceNotFoundException("Product", "ProductID", 12345)
         );
         Order order = mapper.map(orderDto, Order.class);
+        order.setCustomer(customer);
+        order.setProduct(product);
         Order newOrder = orderRepo.save(order);
-        return orderDto;
+        return mapper.map(newOrder, OrderDto.class);
     }
 
     @Override
@@ -87,4 +91,33 @@ public class OrderServiceImpl implements OrderService {
         );
         orderRepo.delete(order);
     }
+
+    @Override
+    public List<OrderPerMonth> getOrderPerMonthOfShop(Integer year) {
+        Long shopID = Long.valueOf(3);
+        List<OrderPerMonth> orderPerMonths = orderRepo.countOrdersPerMonthOfShop(year, shopID);
+        return orderPerMonths;
+    }
+
+    @Override
+    public List<OrderByYear> getOrderPerYearOfShop() {
+        Long shopID = Long.valueOf(3);
+        List<OrderByYear> orderByYears = orderRepo.countOrdersPerYearOfShop(shopID);
+        return orderByYears;
+    }
+
+    @Override
+    public List<OrderPerMonth> getOrderPerMonthOfFactory(Integer year) {
+        Long factoryID = Long.valueOf(1);
+        List<OrderPerMonth> list = orderRepo.countOrdersPerMonthOfFactory(year, factoryID);
+        return list;
+    }
+
+    @Override
+    public List<OrderByYear> getOrderPerYearOfFactory() {
+        Long factoryID = Long.valueOf(1);
+        List<OrderByYear> list = orderRepo.countOrdersPerYearOfFactory(factoryID);
+        return list;
+    }
+
 }

@@ -1,12 +1,10 @@
 package com.example.backend.payload;
 
-import com.example.backend.entities.CallbackInfo;
-import com.example.backend.entities.Quarter;
-import com.example.backend.entities.WarrantyInfo;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
-import java.sql.Date;
-import java.util.List;
+import java.util.Date;
+
 
 @Data
 public class ProductDto {
@@ -14,8 +12,9 @@ public class ProductDto {
     private String engineNumber;
     private String color;
     private String status;
+
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date manufactureDate;
-    private Integer warrantyTime;
     private QuarterDto factory;
     private QuarterDto shop;
     private ProductLineDto productLine;

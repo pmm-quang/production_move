@@ -2,6 +2,8 @@ package com.example.backend.entities;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -17,12 +19,12 @@ public class Order {
 
     private Date buyDate;
 
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @OneToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name = "product_id")
+    @OneToOne(cascade = {CascadeType.MERGE}, orphanRemoval = false)
+    @JoinColumn(name = "product")
     private Product product;
 
 }

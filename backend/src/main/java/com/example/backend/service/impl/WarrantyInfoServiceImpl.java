@@ -83,6 +83,7 @@ public class WarrantyInfoServiceImpl implements WarrantyInfoService {
         Quarter warrantyCenter = quarterRepo.findById(warrantyCenterID).orElseThrow(
                 ()-> new ResourceNotFoundException("Quarter", "QuarterID", warrantyCenterID)
         );
+
         WarrantyInfo warrantyInfo = mapper.map(wDto, WarrantyInfo.class);
         warrantyInfo.setProduct(product);
         warrantyInfo.setShop(shop);
@@ -108,5 +109,26 @@ public class WarrantyInfoServiceImpl implements WarrantyInfoService {
                 ()-> new ResourceNotFoundException("WarrantyInfo", "WarrantyInfoID", warrantyInfoID)
         );
         repo.delete(warrantyInfo);
+    }
+
+    @Override
+    public List<WarrantyInfoDto> getWarrantyInfoByMonthOfWarrantyCenter(Long warrantyCenterID, Long year, Long month) {
+        List<WarrantyInfo> list = repo.findWarrantyInfoByMonthOfWarrantyCenter(warrantyCenterID, year, month);
+        List<WarrantyInfoDto> listDto = list.stream().map(l-> mapper.map(l, WarrantyInfoDto.class)).collect(Collectors.toList());
+        return listDto;
+    }
+
+    @Override
+    public List<WarrantyInfoDto> getWarrantyInfoByQuarterPeriodOfWarrantyCenter(Long warrantyCenterID, Long year, Long quarterPeriod) {
+        List<WarrantyInfo> list = repo.findWarrantyInfoByQuarterPeriodOfWarrantyCenter(warrantyCenterID, year, quarterPeriod);
+        List<WarrantyInfoDto> listDto = list.stream().map(l-> mapper.map(l, WarrantyInfoDto.class)).collect(Collectors.toList());
+        return listDto;
+    }
+
+    @Override
+    public List<WarrantyInfoDto> getWarrantyInfoByYearOfWarrantyCenter(Long warrantyCenterID, Long year) {
+        List<WarrantyInfo> list = repo.findWarrantyInfoByYearOfWarrantyCenter(warrantyCenterID, year);
+        List<WarrantyInfoDto> listDto = list.stream().map(l-> mapper.map(l, WarrantyInfoDto.class)).collect(Collectors.toList());
+        return listDto;
     }
 }
