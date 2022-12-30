@@ -19,11 +19,11 @@ public class Order {
 
     private Date buyDate;
 
-    @ManyToOne(cascade = {CascadeType.MERGE})
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @OneToOne(cascade = {CascadeType.MERGE}, orphanRemoval = false)
+    @OneToOne(cascade = {CascadeType.ALL}, orphanRemoval = false)
     @JoinColumn(name = "product")
     private Product product;
 

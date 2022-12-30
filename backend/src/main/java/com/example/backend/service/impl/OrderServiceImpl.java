@@ -15,6 +15,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -96,7 +97,8 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderPerMonth> getOrderPerMonthOfShop(Integer year) {
         Long shopID = Long.valueOf(3);
         List<OrderPerMonth> orderPerMonths = orderRepo.countOrdersPerMonthOfShop(year, shopID);
-        return orderPerMonths;
+        List<OrderPerMonth> list1 = formatListOrderPerMonth(orderPerMonths);
+        return list1;
     }
 
     @Override
@@ -110,7 +112,8 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderPerMonth> getOrderPerMonthOfFactory(Integer year) {
         Long factoryID = Long.valueOf(1);
         List<OrderPerMonth> list = orderRepo.countOrdersPerMonthOfFactory(year, factoryID);
-        return list;
+        List<OrderPerMonth> list1 = formatListOrderPerMonth(list);
+        return list1;
     }
 
     @Override
@@ -118,6 +121,26 @@ public class OrderServiceImpl implements OrderService {
         Long factoryID = Long.valueOf(1);
         List<OrderByYear> list = orderRepo.countOrdersPerYearOfFactory(factoryID);
         return list;
+    }
+
+    private List<OrderPerMonth> formatListOrderPerMonth(List<OrderPerMonth> list) {
+        List<OrderPerMonth> list1 = new ArrayList<>();
+        int j = 0;
+        for(int i = 1; i <= 12; i++) {
+            String s = "" + list.get(j).getMonth();
+            String[] a = s.split(" ");
+            int tmp = Integer.parseInt(a[1]);
+            if (tmp == i) {
+                list1.add(list.get(j));
+                j++;
+            }
+            else {
+                OrderPerMonth order = new OrderPerMonth(i, Long.valueOf(0));
+                list1.add(order);
+            }
+
+        }
+        return list1;
     }
 
 }

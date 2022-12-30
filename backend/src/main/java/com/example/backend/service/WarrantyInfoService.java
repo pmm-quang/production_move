@@ -14,10 +14,10 @@ public interface WarrantyInfoService {
     WarrantyInfoDto updateWarrantyInfo(WarrantyInfoDto wDto, Long warrantyInfoID);
     void deleteWarrantyInfo(Long warrantyInfoID);
 
-    List<WarrantyInfoDto> getWarrantyInfoByMonthOfWarrantyCenter(Long warrantyCenterID, Long year, Long month);
+    List<WarrantyInfoDto> getWarrantyInfoByMonthOfWarrantyCenter(Long warrantyCenterID, Integer year, Integer month);
 
-    List<WarrantyInfoDto> getWarrantyInfoByQuarterPeriodOfWarrantyCenter(Long warrantyCenterID, Long year, Long quarterPeriod);
+    List<WarrantyInfoDto> getWarrantyInfoByQuarterPeriodOfWarrantyCenter(Long warrantyCenterID, Integer year, Integer quarterPeriod);
 
-    List<WarrantyInfoDto> getWarrantyInfoByYearOfWarrantyCenter(Long warrantyCenterID, Long year);
+    List<WarrantyInfoDto> getWarrantyInfoByYearOfWarrantyCenter(Long warrantyCenterID, Integer year);
 
 }

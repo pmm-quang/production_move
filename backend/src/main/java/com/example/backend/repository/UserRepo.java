@@ -12,4 +12,6 @@ import java.util.List;
 public interface UserRepo extends JpaRepository<User, Long> {
     List<User> findByRole(Role role);
     List<User> findByQuarter(Quarter quarter);
+
+    User findByUsername(String username);
 }

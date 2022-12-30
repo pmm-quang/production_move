@@ -98,7 +98,6 @@ public class WarrantyInfoServiceImpl implements WarrantyInfoService {
                 ()-> new ResourceNotFoundException("WarrantyInfo", "WarrantyInfoID", warrantyInfoID)
         );
         WarrantyInfo w = mapper.map(wDto, WarrantyInfo.class);
-        w.setId(warrantyInfoID);
         WarrantyInfo updateWarrantyInfo = repo.save(w);
         return mapper.map(updateWarrantyInfo, WarrantyInfoDto.class);
     }
@@ -112,21 +111,21 @@ public class WarrantyInfoServiceImpl implements WarrantyInfoService {
     }
 
     @Override
-    public List<WarrantyInfoDto> getWarrantyInfoByMonthOfWarrantyCenter(Long warrantyCenterID, Long year, Long month) {
+    public List<WarrantyInfoDto> getWarrantyInfoByMonthOfWarrantyCenter(Long warrantyCenterID, Integer year, Integer month) {
         List<WarrantyInfo> list = repo.findWarrantyInfoByMonthOfWarrantyCenter(warrantyCenterID, year, month);
         List<WarrantyInfoDto> listDto = list.stream().map(l-> mapper.map(l, WarrantyInfoDto.class)).collect(Collectors.toList());
         return listDto;
     }
 
     @Override
-    public List<WarrantyInfoDto> getWarrantyInfoByQuarterPeriodOfWarrantyCenter(Long warrantyCenterID, Long year, Long quarterPeriod) {
+    public List<WarrantyInfoDto> getWarrantyInfoByQuarterPeriodOfWarrantyCenter(Long warrantyCenterID, Integer year, Integer quarterPeriod) {
         List<WarrantyInfo> list = repo.findWarrantyInfoByQuarterPeriodOfWarrantyCenter(warrantyCenterID, year, quarterPeriod);
         List<WarrantyInfoDto> listDto = list.stream().map(l-> mapper.map(l, WarrantyInfoDto.class)).collect(Collectors.toList());
         return listDto;
     }
 
     @Override
-    public List<WarrantyInfoDto> getWarrantyInfoByYearOfWarrantyCenter(Long warrantyCenterID, Long year) {
+    public List<WarrantyInfoDto> getWarrantyInfoByYearOfWarrantyCenter(Long warrantyCenterID, Integer year) {
         List<WarrantyInfo> list = repo.findWarrantyInfoByYearOfWarrantyCenter(warrantyCenterID, year);
         List<WarrantyInfoDto> listDto = list.stream().map(l-> mapper.map(l, WarrantyInfoDto.class)).collect(Collectors.toList());
         return listDto;

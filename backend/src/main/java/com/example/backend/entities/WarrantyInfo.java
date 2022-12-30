@@ -1,13 +1,16 @@
 package com.example.backend.entities;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
 @Table(name = "warrantyinfo")
-@Data
+@Getter
+@Setter
 public class WarrantyInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

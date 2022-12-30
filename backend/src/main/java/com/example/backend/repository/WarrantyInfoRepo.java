@@ -17,13 +17,13 @@ public interface WarrantyInfoRepo extends JpaRepository<WarrantyInfo, Long> {
     List<WarrantyInfo> findByShop(Quarter shop);
 
     @Query("select w from  WarrantyInfo w where month(w.warrantyDate) = :month and year(w.warrantyDate) = :year and w.warrantyCenter.id = :id")
-    List<WarrantyInfo> findWarrantyInfoByMonthOfWarrantyCenter(@Param("id") Long id, @Param("year") Long year, @Param("month") Long month);
+    List<WarrantyInfo> findWarrantyInfoByMonthOfWarrantyCenter(@Param("id") Long id, @Param("year") Integer year, @Param("month") Integer month);
 
     @Query("select w from  WarrantyInfo w where ((month(w.warrantyDate) = :quarterPeriod*3) " +
             "or (month(w.warrantyDate) = :quarterPeriod*3 - 1) or (month(w.warrantyDate) = :quarterPeriod*3 - 2))" +
             "and year(w.warrantyDate) = :year and w.warrantyCenter.id = :id")
-    List<WarrantyInfo> findWarrantyInfoByQuarterPeriodOfWarrantyCenter(@Param("id") Long id, @Param("year") Long year, @Param("quarterPeriod") Long quarterPeriod);
+    List<WarrantyInfo> findWarrantyInfoByQuarterPeriodOfWarrantyCenter(@Param("id") Long id, @Param("year") Integer year, @Param("quarterPeriod") Integer quarterPeriod);
 
     @Query("select w from  WarrantyInfo w where year(w.warrantyDate) = :year and w.warrantyCenter.id = :id")
-    List<WarrantyInfo> findWarrantyInfoByYearOfWarrantyCenter(@Param("id") Long id, @Param("year") Long year);
+    List<WarrantyInfo> findWarrantyInfoByYearOfWarrantyCenter(@Param("id") Long id, @Param("year") Integer year);
 }

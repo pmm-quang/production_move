@@ -21,7 +21,7 @@ public class Product {
     private Date manufactureDate;
 
 
-    @ManyToOne(cascade = {CascadeType.ALL}, optional = false)
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "productline_id")
     private ProductLine productLine;
 
@@ -33,9 +33,9 @@ public class Product {
     @JoinColumn(name = "shop_id")
     private Quarter shop;
 
-    @OneToMany(mappedBy = "product", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "product", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     private List<WarrantyInfo> warrantyInfos;
 
-    @OneToMany(mappedBy = "product", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "product", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     private List<CallbackInfo> callbackInfos;
 }
