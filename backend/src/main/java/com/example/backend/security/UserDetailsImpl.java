@@ -52,7 +52,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        if (user.getStatus().equals("active")) return true;
+        if (user.getStatus().equals("1")) return true;
         return false;
     }
 }
