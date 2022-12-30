@@ -6,6 +6,13 @@ public abstract class AppConstant {
     public final static long WARRANTY_CENTER_ROLE_ID = 4;
     public final static long FACTORY_ROLE_ID = 3;
 
+
+    public final static String ADMIN_ROLE = "ROLE_ADMIN";
+    public final static String SHOP_ROLE = "ROLE_SHOP";
+    public final static String FACTORY_ROLE = "ROLE_FACTORY";
+    public final static String WARRANTY_CENTER_ROLE = "ROLE_WARRANTYCENTER";
+
+
     public final static String PRODUCT_STATUS_SOLD = "Đã bán";  //3
     public final static String PRODUCT_STATUS_NEW = "Mới sản xuất"; //1
     public final static String PRODUCT_STATUS_MOVED_TO_SHOP = "Đưa về đại lý";  //2

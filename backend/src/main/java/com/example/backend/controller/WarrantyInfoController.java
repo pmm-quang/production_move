@@ -1,10 +1,12 @@
 package com.example.backend.controller;
 
+import com.example.backend.config.AppConstant;
 import com.example.backend.payload.WarrantyInfoDto;
 import com.example.backend.service.WarrantyInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,30 +25,35 @@ public class WarrantyInfoController {
     }
 
     @GetMapping("/product/{productID}/")
+    @Secured({AppConstant.SHOP_ROLE, AppConstant.WARRANTY_CENTER_ROLE})
     public ResponseEntity<List<WarrantyInfoDto>> getWarrantyInfoByProduct(@PathVariable String productID) {
         List<WarrantyInfoDto> list = service.getWarrantyInfoByProduct(productID);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
     @GetMapping("/warrantycenter/{warrantyCenterID}/")
+    @Secured({AppConstant.SHOP_ROLE, AppConstant.WARRANTY_CENTER_ROLE})
     public ResponseEntity<List<WarrantyInfoDto>> getWarrantyInfoByWarrantyCenter(@PathVariable Long warrantyCenterID) {
         List<WarrantyInfoDto> list = service.getWarrantyInfoByWarrantyCenter(warrantyCenterID);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
     @GetMapping("/shop/{shopID}/")
+    @Secured({AppConstant.SHOP_ROLE, AppConstant.WARRANTY_CENTER_ROLE})
     public ResponseEntity<List<WarrantyInfoDto>> getWarrantyInfoByShop(@PathVariable Long shopID) {
         List<WarrantyInfoDto> list = service.getWarrantyInfoByShop(shopID);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
     @GetMapping("/{warrantyInfoID}")
+    @Secured({AppConstant.SHOP_ROLE, AppConstant.WARRANTY_CENTER_ROLE})
     public ResponseEntity<WarrantyInfoDto> getWarrantyInfoById(@PathVariable Long warrantyInfoID) {
         WarrantyInfoDto warrantyInfoDto = service.getWarrantyInfoById(warrantyInfoID);
         return new ResponseEntity<>(warrantyInfoDto, HttpStatus.OK);
     }
 
     @PostMapping("/add/product/{productID}/shop/{shopID}/warrantycenter/{warrantyCenterID}/")
+    @Secured({AppConstant.SHOP_ROLE})
     public ResponseEntity<WarrantyInfoDto> createWarrantyInfo(@RequestBody WarrantyInfoDto warrantyInfoDto,
                                                               @PathVariable String productID,
                                                               @PathVariable Long shopID,
@@ -56,6 +63,7 @@ public class WarrantyInfoController {
     }
 
     @PutMapping("/update/{warrantyInfoID}/")
+    @Secured({AppConstant.WARRANTY_CENTER_ROLE})
     public ResponseEntity<WarrantyInfoDto> updateWarrantyInfo(@RequestBody WarrantyInfoDto warrantyInfoDto,
                                                               @PathVariable Long warrantyInfoID) {
         WarrantyInfoDto warrantyInfoDto1 = service.updateWarrantyInfo(warrantyInfoDto, warrantyInfoID);
@@ -69,6 +77,7 @@ public class WarrantyInfoController {
     }
 
     @GetMapping("/statistics/{warrantyCenterID}/year/{year}/bymonth/{month}/")
+    @Secured({AppConstant.WARRANTY_CENTER_ROLE})
     public ResponseEntity<List<WarrantyInfoDto>> getWarrantyInfoByMonthOfWarrantyCenter(@PathVariable Long warrantyCenterID,
                                                                                         @PathVariable Integer year,
                                                                                         @PathVariable Integer month) {
@@ -77,6 +86,7 @@ public class WarrantyInfoController {
     }
 
     @GetMapping("/statistics/{warrantyCenterID}/year/{year}/byquarterperiod/{quarterPeriod}/")
+    @Secured({AppConstant.WARRANTY_CENTER_ROLE})
     public ResponseEntity<List<WarrantyInfoDto>> getWarrantyInfoByQuarterPeriodOfWarrantyCenter(@PathVariable Long warrantyCenterID,
                                                                                         @PathVariable Integer year,
                                                                                         @PathVariable Integer quarterPeriod) {
@@ -85,6 +95,7 @@ public class WarrantyInfoController {
     }
 
     @GetMapping("/statistics/{warrantyCenterID}/byyear/{year}/")
+    @Secured({AppConstant.WARRANTY_CENTER_ROLE})
     public ResponseEntity<List<WarrantyInfoDto>> getWarrantyInfoByYearOfWarrantyCenter(@PathVariable Long warrantyCenterID,
                                                                                                 @PathVariable Integer year) {
         List<WarrantyInfoDto> list = service.getWarrantyInfoByYearOfWarrantyCenter(warrantyCenterID, year);

@@ -14,12 +14,13 @@ public class JwtTokenProvider {
     public String generateToken(UserDetailsImpl userDetails) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + JWT_EXPIRATION);
-        return Jwts.builder()
+        String compact = Jwts.builder()
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)
                 .signWith(SignatureAlgorithm.HS512, JWT_SECRET)
                 .compact();
+        return compact;
     }
 
     public Claims getClaimsFromJwtToken(String token) {

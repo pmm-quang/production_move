@@ -125,6 +125,12 @@ public class OrderServiceImpl implements OrderService {
 
     private List<OrderPerMonth> formatListOrderPerMonth(List<OrderPerMonth> list) {
         List<OrderPerMonth> list1 = new ArrayList<>();
+        if (list.isEmpty()) {
+            for (int i = 1; i < 12; i++) {
+                OrderPerMonth order = new OrderPerMonth(i, Long.valueOf(0));
+                list1.add(order);
+            }
+        }
         int j = 0;
         for(int i = 1; i <= 12; i++) {
             String s = "" + list.get(j).getMonth();

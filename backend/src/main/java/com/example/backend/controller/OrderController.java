@@ -1,5 +1,6 @@
 package com.example.backend.controller;
 
+import com.example.backend.config.AppConstant;
 import com.example.backend.entities.custom.OrderByYear;
 import com.example.backend.entities.custom.OrderPerMonth;
 import com.example.backend.payload.OrderDto;
@@ -8,6 +9,7 @@ import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -58,24 +60,28 @@ public class OrderController {
     }
 
     @GetMapping("statistics/shop/permonth/{year}/")
+    @Secured({AppConstant.SHOP_ROLE})
     public ResponseEntity<List<OrderPerMonth>> getOrderPerMonthOfShop(@PathVariable Integer year) {
         List<OrderPerMonth> list = orderService.getOrderPerMonthOfShop(year);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
     @GetMapping("statistics/shop/peryear/")
+    @Secured({AppConstant.SHOP_ROLE})
     public ResponseEntity<List<OrderByYear>> getOrderPerYearOfShop() {
         List<OrderByYear> list = orderService.getOrderPerYearOfShop();
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
     @GetMapping("statistics/factory/permonth/{year}/")
+    @Secured({AppConstant.FACTORY_ROLE})
     public ResponseEntity<List<OrderPerMonth>> getOrderPerMonthOfFactory(@PathVariable Integer year) {
         List<OrderPerMonth> list = orderService.getOrderPerMonthOfFactory(year);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
     @GetMapping("statistics/factory/peryear/")
+    @Secured({AppConstant.FACTORY_ROLE})
     public ResponseEntity<List<OrderByYear>> getOrderPerYearOfFactory() {
         List<OrderByYear> list = orderService.getOrderPerYearOfFactory();
         return new ResponseEntity<>(list, HttpStatus.OK);

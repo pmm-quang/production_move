@@ -11,6 +11,7 @@ import com.example.backend.repository.UserRepo;
 import com.example.backend.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,6 +29,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private QuarterRepo quarterRepo;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     public UserServiceImpl(UserRepo userRepo,
                            RoleRepo roleRepo) {
@@ -70,7 +74,9 @@ public class UserServiceImpl implements UserService {
         Quarter quarter = quarterRepo.findById(quarterID).orElseThrow(
                 ()-> new ResourceNotFoundException("Quarter", "QuarterID", quarterID)
         );
+        String password = passwordEncoder.encode(userDto.getPassword());
         User user = mapper.map(userDto, User.class);
+        user.setPassword(password);
         User newUser = userRepo.save(user);
         return userDto;
     }
@@ -80,7 +86,14 @@ public class UserServiceImpl implements UserService {
         User user = userRepo.findById(userID).orElseThrow(
                 ()-> new ResourceNotFoundException("User", "UserID", userID)
         );
+        String p = user.getPassword();
+        String pto = userDto.getPassword();
+        String password = p;
+        if (!p.equals(pto)) {
+            password = passwordEncoder.encode(userDto.getPassword());
+        }
         User user1 = mapper.map(userDto, User.class);
+        user1.setPassword(password);
         User updateUser = userRepo.save(user1);
         return userDto;
     }
